@@ -19,7 +19,7 @@ namespace WpfApp1
 
             Controller.Controller controller = new Controller.Controller(this, personFile, view);
 
-            controller.printFile("D:\\Test\\");
+            controller.printFile("\\");
         }
     }
 }

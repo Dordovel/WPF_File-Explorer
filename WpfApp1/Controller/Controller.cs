@@ -22,16 +22,31 @@ namespace WpfApp1 . Controller
 
         public void printFile(string path)
         {
-            List<IView> list=new List<IView>();
+            List<IView> list = new List<IView>();
+
 
             string[] file = person_file.getFile(path);
 
-            foreach (var VARIABLE in file)
+            if (path=="\\")
             {
-                IView vi = this.view.getNewObject();
-                vi.Title=new FileInfo(VARIABLE).Name;
+                foreach (var VARIABLE in file)
+                {
+                    IView vi = this.view.getNewObject();
+                    vi.Title = VARIABLE;
 
-                list.Add(vi);
+                    list.Add(vi);
+                }
+            }
+            else
+            {
+                foreach ( var VARIABLE in file )
+                {
+                    IView vi = this . view . getNewObject ( );
+
+                    vi . Title = new FileInfo ( VARIABLE ) . Name;
+
+                    list . Add ( vi );
+                }
             }
 
             window.file_list.ItemsSource = list;
