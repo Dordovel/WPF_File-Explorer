@@ -27,5 +27,6 @@ namespace WpfApp1
             
             file_list.MouseDoubleClick+=list_Item_Selected;
         }
+        
     }
 }

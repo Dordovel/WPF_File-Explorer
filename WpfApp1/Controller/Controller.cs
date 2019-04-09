@@ -1,4 +1,5 @@
 ﻿using System . Collections . Generic;
+using System.Collections.ObjectModel;
 using System.IO;
 using System.Security.Cryptography;
 using System.Windows;
@@ -12,6 +13,8 @@ namespace WpfApp1 . Controller
     class Controller
     {
 
+        private List<string> pathList;
+
         private string path;
 
         private IData person_file;
@@ -23,6 +26,7 @@ namespace WpfApp1 . Controller
             this.window = window;
             this.person_file = person_file;
             this.view = view;
+            this.pathList=new List<string>();
 
             this . window . list_Item_Selected += Window_list_Item_Selected; ; 
         }
@@ -34,14 +38,16 @@ namespace WpfApp1 . Controller
             if ( item != null )
             {
                 path += item.Title + "\\";
+
+                this.pathList.Add( item . Title + "\\" );
+
                 printFile (path);
             }
         }
 
         public void printFile(string path)
         {
-            List<IView> list = new List<IView>();
-
+            ObservableCollection<IView> list=new ObservableCollection<IView>();
 
             string[] file = person_file.getFile(path);
 
