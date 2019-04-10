@@ -22,14 +22,22 @@ namespace WpfApp1
             IData personFile=new PersonFile();
 
             IView view=new View.View();
+                
 
             Controller.Controller controller = new Controller.Controller(this, personFile, view);
+
+            controller.ImageArray.Add ( Image.folder , "../Image/folder.png" );
+            controller.ImageArray.Add ( Image.music , "../Image/music.png" );
+            controller.ImageArray.Add ( Image.textFile , "../Image/document.png" );
+            controller.ImageArray.Add ( Image.hard_drive , "../Image/drive.png" );
 
             controller.printFile("\\");
             
             file_list.MouseDoubleClick+=list_Item_Selected;
 
             ButtonBack.Click += pressButtonBack;
+
+            
         }
     }
 }

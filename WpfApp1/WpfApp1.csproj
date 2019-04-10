@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="ImageKey.cs" />
     <Compile Include="View\IView.cs" />
     <Compile Include="View\View.cs" />
     <Page Include="View\MainWindow.xaml">
@@ -101,6 +102,14 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Image\Back.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\document.png" />
+    <Resource Include="Image\folder.png" />
+    <Resource Include="Image\music.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\drive.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

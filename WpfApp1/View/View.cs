@@ -7,6 +7,8 @@ namespace WpfApp1 . View
     {
         public string Title { get; set; }
 
+        public string Image { get; set; }
+
         public IView getNewObject()
         {
             return new View();

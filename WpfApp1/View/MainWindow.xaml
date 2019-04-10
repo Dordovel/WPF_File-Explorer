@@ -8,14 +8,21 @@
         Title="MainWindow" Height="460" Width="810"
         ResizeMode="NoResize">
     <Grid>
-        <ListView Foreground="Brown" HorizontalAlignment="Left" Height="392" VerticalAlignment="Top" Width="813" x:Name="file_list" Margin="-5,39,-4,0">
-            <ListView.View>
-                <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
-                    <GridViewColumn Width = "{Binding ElementName = file_list, Path = ActualWidth}"
-                        DisplayMemberBinding="{Binding Path=Title}">
-                    </GridViewColumn>
-                </GridView>
-            </ListView.View>
+        <ListView Foreground="Brown" HorizontalAlignment="Left" Width="800" x:Name="file_list" Margin="-5,39,-4,-4" Height="383" VerticalAlignment="Top">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel>
+                        <Grid>
+                            <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                                <Image Source="{Binding Image}" Width="15" Height="15"></Image>
+                            </Grid>
+                            <Grid HorizontalAlignment="Center" Margin="30,0,0,0">
+                                <TextBlock  Text="{Binding Title}"></TextBlock>
+                            </Grid>
+                        </Grid>
+                    </StackPanel>
+                </DataTemplate>
+            </ListView.ItemTemplate>
         </ListView>
         <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin="0,0,754,0" Width="40" x:Name="ButtonBack">
             <StackPanel Width="40" Margin="-20, 0,-10,-10">
