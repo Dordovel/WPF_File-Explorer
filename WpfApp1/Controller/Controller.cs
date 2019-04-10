@@ -1,4 +1,5 @@
-﻿using System . Collections . Generic;
+﻿using System;
+using System . Collections . Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
@@ -19,6 +20,7 @@ namespace WpfApp1 . Controller
         private IView view;
 
         public Dictionary<Image, string> ImageArray { set; get; }
+        ObservableCollection<IView> list;
 
         public Controller(MainWindow window, IData person_file, IView view)
         {
@@ -28,6 +30,7 @@ namespace WpfApp1 . Controller
 
             this.pathList = new List<string>();
             this.ImageArray=new Dictionary<Image, string>();
+            list = new ObservableCollection<IView> ( );
 
             this.window.list_Item_Selected += Window_list_Item_Selected;
             this . window . pressButtonBack += Window_pressButtonBack;
@@ -68,9 +71,9 @@ namespace WpfApp1 . Controller
 
         public void printFile(string path)
         {
-            ObservableCollection<IView> list = new ObservableCollection<IView>();
+            this.list.Clear ( );
 
-            string[] file = person_file.getFile(path);
+            string [ ] file = person_file.getFile(path);
 
             if (path == "\\")
             {
@@ -112,6 +115,16 @@ namespace WpfApp1 . Controller
                             vi.Image = this.ImageArray [ Image.music ];
                         }
 
+                        else if (info.Extension.Contains("jpg")
+                                 || info.Extension.Contains("png"))
+                        {
+                            vi.Image = VARIABLE;
+                        }
+
+                        info = null;
+
+                        GC.Collect();
+
                         list.Add ( vi );
                     }
                 }
@@ -122,6 +135,8 @@ namespace WpfApp1 . Controller
 
         public string back()
         {
+            this.list.Clear();
+
             if (this.pathList.Count == 0)
             {
                 return "\\";
