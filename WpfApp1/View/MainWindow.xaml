@@ -14,10 +14,10 @@
                     <StackPanel>
                         <Grid>
                             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Image Source="{Binding Image}" Width="15" Height="15"></Image>
+                                <Image Source="{Binding Image}" Width="30" Height="30"></Image>
                             </Grid>
-                            <Grid HorizontalAlignment="Center" Margin="30,0,0,0">
-                                <TextBlock  Text="{Binding Title}"></TextBlock>
+                            <Grid HorizontalAlignment="Center" Margin="40,0,0,0">
+                                <TextBlock  Text="{Binding Title}" FontSize="14"></TextBlock>
                             </Grid>
                         </Grid>
                     </StackPanel>
