@@ -2,10 +2,10 @@
 
 namespace WpfApp1 . View
 {
-    interface IView
+    public interface IView
     {
         string Title { get; set; }
 
         IView getNewObject();
-    } 
+    }
 }

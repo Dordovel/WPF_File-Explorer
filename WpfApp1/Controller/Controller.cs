@@ -10,48 +10,61 @@ using WpfApp1.View;
 
 namespace WpfApp1 . Controller
 {
-    class Controller
+    public class Controller
     {
-
         private List<string> pathList;
-
-        private string path;
 
         private IData person_file;
         private MainWindow window;
         private IView view;
 
-        public Controller(MainWindow window, IData person_file,IView view)
+        public Controller(MainWindow window, IData person_file, IView view)
         {
             this.window = window;
             this.person_file = person_file;
             this.view = view;
-            this.pathList=new List<string>();
+            this.pathList = new List<string>();
 
-            this . window . list_Item_Selected += Window_list_Item_Selected; ; 
+            this.window.list_Item_Selected += Window_list_Item_Selected;
+            this . window . pressButtonBack += Window_pressButtonBack;
         }
 
-        private void Window_list_Item_Selected( object sender , System . Windows . Input . MouseButtonEventArgs e )
+        private void Window_pressButtonBack( object sender , RoutedEventArgs e )
         {
-            var item = ( ( FrameworkElement ) e . OriginalSource ) . DataContext as View.View;
+           this.printFile( this . back ( ) );
+        }
 
-            if ( item != null )
+        public string getPath()
+        {
+            string temp = string . Empty;
+
+            foreach ( var VARIABLE in this . pathList )
             {
-                path += item.Title + "\\";
+                temp += VARIABLE;
+            }
 
-                this.pathList.Add( item . Title + "\\" );
+            return temp;
+        }
 
-                printFile (path);
+        private void Window_list_Item_Selected(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            var item = ((FrameworkElement) e.OriginalSource).DataContext as View.View;
+
+            if (item != null)
+            {
+                this.pathList.Add(item.Title + "\\");
+
+                printFile(this.getPath());
             }
         }
 
         public void printFile(string path)
         {
-            ObservableCollection<IView> list=new ObservableCollection<IView>();
+            ObservableCollection<IView> list = new ObservableCollection<IView>();
 
             string[] file = person_file.getFile(path);
 
-            if (path=="\\")
+            if (path == "\\")
             {
                 foreach (var VARIABLE in file)
                 {
@@ -63,17 +76,42 @@ namespace WpfApp1 . Controller
             }
             else
             {
-                foreach ( var VARIABLE in file )
+                foreach (var VARIABLE in file)
                 {
-                    IView vi = this . view . getNewObject ( );
+                    IView vi = this.view.getNewObject();
 
-                    vi . Title = new FileInfo ( VARIABLE ) . Name;
+                    vi.Title = new FileInfo(VARIABLE).Name;
 
-                    list . Add ( vi );
+                    list.Add(vi);
                 }
             }
 
             window.file_list.ItemsSource = list;
+        }
+
+        public string back()
+        {
+            if (this.pathList.Count == 0)
+            {
+                return "\\";
+            }
+
+            this.pathList.Remove(this.pathList[this.pathList.Count - 1]);
+
+            string temp = string.Empty;
+
+            foreach (var VARIABLE in this.pathList)
+            {
+                temp += VARIABLE;
+            }
+
+            if (temp == string.Empty)
+            {
+                return "\\";
+            }
+
+            return temp;
+
         }
 
     }

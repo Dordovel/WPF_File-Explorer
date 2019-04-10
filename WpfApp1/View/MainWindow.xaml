@@ -17,7 +17,7 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin="0,0,754,0" Width="40">
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin="0,0,754,0" Width="40" x:Name="ButtonBack">
             <StackPanel Width="40" Margin="-20, 0,-10,-10">
                 <Image Source="../Image/Back.png" Height="20" Width="20"/>
             </StackPanel>

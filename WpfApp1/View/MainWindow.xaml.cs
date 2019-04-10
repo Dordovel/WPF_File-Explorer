@@ -1,4 +1,5 @@
-﻿using System . Windows;
+﻿using System;
+using System . Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
 using WpfApp1.File;
@@ -12,6 +13,7 @@ namespace WpfApp1
     public partial class MainWindow : Window
     {
         public event MouseButtonEventHandler list_Item_Selected;
+        public event RoutedEventHandler pressButtonBack;
 
         public MainWindow()
         {
@@ -26,7 +28,8 @@ namespace WpfApp1
             controller.printFile("\\");
             
             file_list.MouseDoubleClick+=list_Item_Selected;
+
+            ButtonBack.Click += pressButtonBack;
         }
-        
     }
 }

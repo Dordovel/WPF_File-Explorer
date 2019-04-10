@@ -3,6 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft . VisualStudio . TestTools . UnitTesting;
 using WpfApp1.File;
+using WpfApp1.Controller;
 
 namespace UnitTestProject1
 {
