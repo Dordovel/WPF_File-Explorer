@@ -123,14 +123,14 @@ namespace WpfApp1 . Controller
 
                         info = null;
 
-                        GC.Collect();
-
                         list.Add ( vi );
                     }
                 }
             }
 
             window.file_list.ItemsSource = list;
+
+            GC.Collect ( );
         }
 
         public string back()
