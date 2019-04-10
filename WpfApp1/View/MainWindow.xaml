@@ -8,7 +8,7 @@
         Title="MainWindow" Height="460" Width="810"
         ResizeMode="NoResize">
     <Grid>
-        <ListView Foreground="Brown" HorizontalAlignment="Left" Height="411" VerticalAlignment="Top" Width="813" x:Name="file_list" Margin="-5,20,-4,0">
+        <ListView Foreground="Brown" HorizontalAlignment="Left" Height="392" VerticalAlignment="Top" Width="813" x:Name="file_list" Margin="-5,39,-4,0">
             <ListView.View>
                 <GridView ColumnHeaderContainerStyle="{StaticResource myHeaderStyle}">
                     <GridViewColumn Width = "{Binding ElementName = file_list, Path = ActualWidth}"
@@ -17,6 +17,10 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Button Content="Back" HorizontalAlignment="Right" VerticalAlignment="Top" Height="39" Margin="0,-9,725,0" Width="77"/>
+        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin="0,0,754,0" Width="40">
+            <StackPanel Width="40" Margin="-20, 0,-10,-10">
+                <Image Source="../Image/Back.png" Height="20" Width="20"/>
+            </StackPanel>
+        </Button>
     </Grid>
 </Window>
