@@ -4,6 +4,7 @@ using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
 using System.Windows;
+using System.Windows.Controls;
 using WpfApp1.File;
 using WpfApp1.View;
 
@@ -35,11 +36,31 @@ namespace WpfApp1 . Controller
             this.window.list_Item_Selected += Window_list_Item_Selected;
             this . window . pressButtonBack += Window_pressButtonBack;
 
+            this.window.pressButtonMenuItemListViewOpen += this.Window_pressButtonMenuItemListViewOpen;
+
             visibleFile = false;
+        }
+
+        private void Window_pressButtonMenuItemListViewOpen( object sender , RoutedEventArgs e )
+        {
+            MenuItem menu = sender as MenuItem;
+
+            ListView lvi = ((ContextMenu) menu.Parent).PlacementTarget as ListView;
+
+            IView vi = lvi.SelectedItem as IView;
+
+            this.ShowFile(vi);
         }
 
         private void Window_pressButtonBack( object sender , RoutedEventArgs e )
         {
+            for (int a = 0; a < this.list.Count; ++a)
+            {
+                this.list[a] = null;
+            }
+
+            GC.Collect();
+
            this.printFile( this . back ( ) );
         }
 
@@ -61,12 +82,17 @@ namespace WpfApp1 . Controller
 
             if (item != null)
             {
-                this.pathList.Add(item.Title + "\\");
-
-                printFile(this.getPath());
+                this.ShowFile(item);
             }
         }
 
+
+        private void ShowFile(IView path)
+        {
+            this.pathList.Add ( path.Title + "\\" );
+
+            printFile ( this.getPath ( ) );
+        }
         
 
         public void printFile(string path)
@@ -129,8 +155,7 @@ namespace WpfApp1 . Controller
             }
 
             window.file_list.ItemsSource = list;
-
-            GC.Collect ( );
+            
         }
 
         public string back()

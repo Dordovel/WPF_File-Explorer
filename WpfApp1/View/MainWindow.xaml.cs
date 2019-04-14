@@ -15,6 +15,12 @@ namespace WpfApp1
         public event MouseButtonEventHandler list_Item_Selected;
         public event RoutedEventHandler pressButtonBack;
 
+        public event RoutedEventHandler pressButtonMenuItemListViewOpen;
+        public event RoutedEventHandler pressButtonMenuItemListViewCopy;
+        public event RoutedEventHandler pressButtonMenuItemListViewMove;
+        public event RoutedEventHandler pressButtonMenuItemListViewDelete;
+        public event RoutedEventHandler pressButtonMenuItemListViewProperty;
+
         public MainWindow()
         {
             InitializeComponent ( );
@@ -37,7 +43,16 @@ namespace WpfApp1
 
             ButtonBack.Click += pressButtonBack;
 
-            
+            MenuItemOpen.Click += pressButtonMenuItemListViewOpen;
+
+            /*MenuItemCopy.Click += pressButtonMenuItemListViewCopy;
+
+            MenuItemDelete.Click += pressButtonMenuItemListViewDelete;
+
+            MenuItemMove.Click += pressButtonMenuItemListViewMove;
+
+            MenuItemProperty.Click += pressButtonMenuItemListViewProperty;
+            */
         }
     }
 }

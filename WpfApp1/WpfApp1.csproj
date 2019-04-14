@@ -111,5 +111,13 @@
   <ItemGroup>
     <Resource Include="Image\drive.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\copy.png" />
+    <Resource Include="Image\delete.png" />
+    <Resource Include="Image\move.png" />
+    <Resource Include="Image\new_folder.png" />
+    <Resource Include="Image\paste.png" />
+    <Resource Include="Image\search.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
