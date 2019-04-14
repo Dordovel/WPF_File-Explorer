@@ -78,7 +78,7 @@ namespace WpfApp1 . Controller
 
         private void Window_list_Item_Selected(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            var item = ((FrameworkElement) e.OriginalSource).DataContext as View.View;
+            var item = ((FrameworkElement) e.OriginalSource).DataContext as IView;
 
             if (item != null)
             {
