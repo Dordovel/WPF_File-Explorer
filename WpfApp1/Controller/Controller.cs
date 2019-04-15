@@ -38,7 +38,14 @@ namespace WpfApp1 . Controller
 
             this.window.pressButtonMenuItemListViewOpen += this.Window_pressButtonMenuItemListViewOpen;
 
+            this.window.pressButtonMenuItemListViewProperty += this.Window_pressButtonMenuItemListViewProperty;
+
             visibleFile = false;
+        }
+
+        private void Window_pressButtonMenuItemListViewProperty( object sender , RoutedEventArgs e )
+        {
+            new Property(this.getPath()+this.getListViewSelectedItemFromContextMenu(sender).Title).ShowDialog();
         }
 
 

@@ -5,9 +5,11 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="Property" Height="450" Width="450"
-        ResizeMode="NoResize">
+        Title="Property" Height="587.629" Width="450"
+        ResizeMode="NoResize"
+        x:Name="Mainwindow">
     <Grid>
-        
+        <TextBox x:Name="InfoLabel" Margin="0,0,220,0" Foreground="Brown"/>
+        <TextBox x:Name="Info" Margin="210,0,0,0"/>
     </Grid>
 </Window>

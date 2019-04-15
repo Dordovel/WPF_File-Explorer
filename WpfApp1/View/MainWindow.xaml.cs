@@ -49,9 +49,9 @@ namespace WpfApp1
             MenuItemDelete.Click += pressButtonMenuItemListViewDelete;
 
             MenuItemMove.Click += pressButtonMenuItemListViewMove;
-
-            MenuItemProperty.Click += pressButtonMenuItemListViewProperty;
             */
+            MenuItemProperty.Click += pressButtonMenuItemListViewProperty;
+            
         }
     }
 }
