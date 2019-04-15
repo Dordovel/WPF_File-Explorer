@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using Microsoft.Win32;
 
 namespace WpfApp1 . File
 {
@@ -22,5 +23,11 @@ namespace WpfApp1 . File
 
             return temp;
         }
+
+        public string fileRead(string path)
+        {
+            return String.Empty;
+        }
+
     }
 }

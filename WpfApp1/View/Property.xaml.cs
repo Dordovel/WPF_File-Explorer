@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -43,6 +44,11 @@ namespace WpfApp1
                     );
 
             }
+
+            properties = null;
+            names = null;
+
+            GC.Collect();
 
             return temp;
         }

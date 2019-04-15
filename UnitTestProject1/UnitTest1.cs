@@ -35,5 +35,14 @@ namespace UnitTestProject1
 
             Assert . AreEqual ( msg , file . getFile ( path ) [ 1 ] );
         }
+
+
+        [TestMethod]
+        public void TestMethod3()
+        {
+            PersonFile file = new PersonFile ( );
+
+            Assert.AreEqual ( String.Empty , file.fileRead( String.Empty ) );
+        }
     }
 }
