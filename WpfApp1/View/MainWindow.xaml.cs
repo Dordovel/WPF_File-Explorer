@@ -29,8 +29,7 @@ namespace WpfApp1
 
             IView view=new View.View();
                 
-
-            Controller.Controller controller = new Controller.Controller(this, personFile, view);
+            Controller.Controller controller = new Controller.Controller(window:this,person_file:personFile, view:view);
 
             controller.ImageArray.Add ( Image.folder , "../Image/folder.png" );
             controller.ImageArray.Add ( Image.music , "../Image/music.png" );

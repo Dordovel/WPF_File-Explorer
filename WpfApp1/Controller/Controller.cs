@@ -41,28 +41,54 @@ namespace WpfApp1 . Controller
             visibleFile = false;
         }
 
+
+        #region Event
+
+        #region ContextMenuEvent
         private void Window_pressButtonMenuItemListViewOpen( object sender , RoutedEventArgs e )
         {
-            MenuItem menu = sender as MenuItem;
-
-            ListView lvi = ((ContextMenu) menu.Parent).PlacementTarget as ListView;
-
-            IView vi = lvi.SelectedItem as IView;
-
-            this.ShowFile(vi);
+            this.ShowFile ( this.getListViewSelectedItemFromContextMenu ( sender ) );
         }
+
+
+        #endregion
+
+
+        private void Window_list_Item_Selected( object sender , System.Windows.Input.MouseButtonEventArgs e )
+        {
+            var item = ( ( FrameworkElement ) e.OriginalSource ).DataContext as IView;
+
+            if ( item != null )
+            {
+                this.ShowFile ( item );
+            }
+        }
+
 
         private void Window_pressButtonBack( object sender , RoutedEventArgs e )
         {
-            for (int a = 0; a < this.list.Count; ++a)
+            for ( int a = 0 ; a < this.list.Count ; ++a )
             {
-                this.list[a] = null;
+                this.list [ a ] = null;
             }
 
-            GC.Collect();
+            GC.Collect ( );
 
-           this.printFile( this . back ( ) );
+            this.printFile ( this.back ( ) );
         }
+
+        #endregion
+
+        private IView getListViewSelectedItemFromContextMenu(object sender)
+        {
+            MenuItem menu = sender as MenuItem;
+
+            ListView lvi = ( ( ContextMenu ) menu.Parent ).PlacementTarget as ListView;
+
+            return lvi.SelectedItem as IView;
+        }
+
+       
 
         public string getPath()
         {
@@ -75,17 +101,7 @@ namespace WpfApp1 . Controller
 
             return temp;
         }
-
-        private void Window_list_Item_Selected(object sender, System.Windows.Input.MouseButtonEventArgs e)
-        {
-            var item = ((FrameworkElement) e.OriginalSource).DataContext as IView;
-
-            if (item != null)
-            {
-                this.ShowFile(item);
-            }
-        }
-
+        
 
         private void ShowFile(IView path)
         {

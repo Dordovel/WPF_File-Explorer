@@ -26,8 +26,7 @@
             <ListView.ContextMenu>
                 <ContextMenu>
 
-                    <MenuItem Header="Open" x:Name="MenuItemOpen" 
-                              DataContext="{Binding RelativeSource={RelativeSource TemplatedParent}}"/>
+                    <MenuItem Header="Open" x:Name="MenuItemOpen"/>
 
                     <MenuItem Header="Copy" x:Name="MenuItemCopy">
                         <MenuItem.Icon>
@@ -57,5 +56,7 @@
                 <Image Source="../Image/Back.png" Height="20" Width="20"/>
             </StackPanel>
         </Button>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="484,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266"/>
+        <Button HorizontalAlignment="Left" Height="24" Margin="764,0,0,340"/>
     </Grid>
 </Window>
