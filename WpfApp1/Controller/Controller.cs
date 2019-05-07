@@ -122,6 +122,13 @@ namespace WpfApp1 . Controller
 
                 printFile ( this.getPath ( ) );
             }
+            else
+            {
+
+                if( new FileInfo ( path ).Extension.Contains(".mp3"))
+                {
+                }
+            }
         }
         
 

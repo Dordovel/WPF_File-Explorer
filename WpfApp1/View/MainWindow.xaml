@@ -6,9 +6,12 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" Height="460" Width="810"
-        ResizeMode="NoResize">
+        ResizeMode="NoResize"
+        x:Name="Window">
+
+
     <Grid>
-        <ListView Foreground="Brown" HorizontalAlignment="Left" Width="800" x:Name="file_list" Margin="-5,39,-4,-4" Height="383" VerticalAlignment="Top">
+        <ListView Foreground="Brown" HorizontalAlignment="Left" Width="800" x:Name="file_list" Margin="-5,39,-4,-4" Height="383" VerticalAlignment="Top" Style="{DynamicResource ListViewStyle1}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
@@ -51,12 +54,7 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <Button HorizontalAlignment="Right" VerticalAlignment="Top" Height="40" Margin="0,0,754,0" Width="40" x:Name="ButtonBack">
-            <StackPanel Width="40" Margin="-20, 0,-10,-10">
-                <Image Source="../Image/Back.png" Height="20" Width="20"/>
-            </StackPanel>
-        </Button>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="484,0,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266"/>
-        <Button HorizontalAlignment="Left" Height="24" Margin="764,0,0,340"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="478,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266"/>
+        <Button Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" x:Name="ButtonBack" Style="{DynamicResource ButtonStyle1}"/>
     </Grid>
 </Window>

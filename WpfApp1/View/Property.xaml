@@ -9,7 +9,7 @@
         ResizeMode="NoResize"
         x:Name="Mainwindow">
     <Grid>
-        <TextBox x:Name="InfoLabel" Margin="0,0,220,0" Foreground="Brown"/>
-        <TextBox x:Name="Info" Margin="210,0,0,0"/>
+        <TextBlock x:Name="InfoLabel" Margin="0,0,220,0" Foreground="Brown"/>
+        <TextBlock x:Name="Info" Margin="210,0,0,0"/>
     </Grid>
 </Window>
