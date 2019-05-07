@@ -9,9 +9,6 @@ namespace WpfApp1 . View
 
         public string Image { get; set; }
 
-        public IView getNewObject()
-        {
-            return new View();
-        }
+        public IView getNewObject() => new View ( );
     }
 }

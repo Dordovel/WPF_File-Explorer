@@ -54,7 +54,7 @@ namespace WpfApp1 . Controller
         #region ContextMenuEvent
         private void Window_pressButtonMenuItemListViewOpen( object sender , RoutedEventArgs e )
         {
-            this.ShowFile ( this.getListViewSelectedItemFromContextMenu ( sender ) );
+            this.Open ( this.getListViewSelectedItemFromContextMenu ( sender ) );
         }
 
 
@@ -67,7 +67,7 @@ namespace WpfApp1 . Controller
 
             if ( item != null )
             {
-                this.ShowFile ( item );
+                this.Open ( item );
             }
         }
 
@@ -110,11 +110,18 @@ namespace WpfApp1 . Controller
         }
         
 
-        private void ShowFile(IView path)
+        private void Open(IView view)
         {
-            this.pathList.Add ( path.Title + "\\" );
+            string path = this.getPath ( ) + (view.Title + "\\");
 
-            printFile ( this.getPath ( ) );
+            FileAttributes attr = System.IO.File.GetAttributes ( path );
+
+            if(attr.HasFlag(FileAttributes.Directory))
+            {
+                this.pathList.Add ( view.Title+"\\" );
+
+                printFile ( this.getPath ( ) );
+            }
         }
         
 
@@ -144,6 +151,8 @@ namespace WpfApp1 . Controller
                     FileInfo info = new FileInfo(VARIABLE);
 
                     FileAttributes attr = System.IO.File.GetAttributes(VARIABLE);
+
+
 
                     if (this.visibleFile || (info.Attributes & FileAttributes.Hidden) == 0)
                     {
