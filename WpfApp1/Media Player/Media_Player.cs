@@ -36,7 +36,13 @@ namespace WpfApp1.Media_Player
         {
             this.media_file_path = media_file_path;
 
-            this.mediaPlayer.Open ( new Uri( this.media_file_path ));
+            if(this.MediaIsPlay)
+            {
+                this.mediaPlayer.Close ( );
+                this.mediaPlayer = new MediaPlayer ( );
+            }
+
+            this.mediaPlayer.Open ( new Uri ( this.media_file_path ) );
 
             this.mediaPlayer.Play ( );
         }
