@@ -22,6 +22,10 @@ namespace WpfApp1 . Controller
 
         public Dictionary<Image, string> ImageArray { set; get; }
         ObservableCollection<IView> list;
+        Media_Player.Media_Player media;
+
+
+
 
         public Controller(MainWindow window, IData person_file, IView view)
         {
@@ -33,15 +37,54 @@ namespace WpfApp1 . Controller
             this.ImageArray=new Dictionary<Image, string>();
             list = new ObservableCollection<IView> ( );
 
+            this.Main_Window_Event_subscription ( );
+
+            this.media = new Media_Player.Media_Player ( );
+
+            visibleFile = false;
+        }
+
+
+
+
+        private void Main_Window_Event_subscription()
+        {
             this.window.list_Item_Selected += Window_list_Item_Selected;
-            this . window . pressButtonBack += Window_pressButtonBack;
+
+            this.window.pressButtonBack += Window_pressButtonBack;
 
             this.window.pressButtonMenuItemListViewOpen += this.Window_pressButtonMenuItemListViewOpen;
 
             this.window.pressButtonMenuItemListViewProperty += this.Window_pressButtonMenuItemListViewProperty;
 
-            visibleFile = false;
+            this.window.pressButtonSearch += this.Window_pressButtonSearch;
+
+            this.window.Unloaded += this.Window_Unloaded;
         }
+
+
+
+
+        private void Window_Unloaded( object sender , RoutedEventArgs e )
+        {
+            if ( media != null )
+            {
+                if ( media.MediaIsPlay )
+                {
+                    media.Close ( );
+                }
+            }
+        }
+
+
+
+
+        private void Window_pressButtonSearch( object sender , RoutedEventArgs e )
+        {
+        }
+
+
+
 
         private void Window_pressButtonMenuItemListViewProperty( object sender , RoutedEventArgs e )
         {
@@ -72,6 +115,8 @@ namespace WpfApp1 . Controller
         }
 
 
+
+
         private void Window_pressButtonBack( object sender , RoutedEventArgs e )
         {
             for ( int a = 0 ; a < this.list.Count ; ++a )
@@ -83,6 +128,8 @@ namespace WpfApp1 . Controller
 
             this.printFile ( this.back ( ) );
         }
+
+
 
         #endregion
 
@@ -112,7 +159,7 @@ namespace WpfApp1 . Controller
 
         private void Open(IView view)
         {
-            string path = this.getPath ( ) + (view.Title + "\\");
+            string path = this.getPath ( ) + (view.Title);
 
             FileAttributes attr = System.IO.File.GetAttributes ( path );
 
@@ -120,13 +167,19 @@ namespace WpfApp1 . Controller
             {
                 this.pathList.Add ( view.Title+"\\" );
 
-                printFile ( this.getPath ( ) );
+                this.printFile ( this.getPath ( ) );
             }
             else
             {
 
-                if( new FileInfo ( path ).Extension.Contains(".mp3"))
+                FileInfo info = new FileInfo ( path );
+
+                foreach( string format in Media_Player.Media_Player.supportMediaFormat )
                 {
+                    if ( info.Extension.ToLower().Contains ( format.ToLower() ) )
+                    {
+                        this.media.Play ( path );
+                    }
                 }
             }
         }
@@ -196,6 +249,9 @@ namespace WpfApp1 . Controller
             window.file_list.ItemsSource = list;
             
         }
+
+
+
 
         public string back()
         {

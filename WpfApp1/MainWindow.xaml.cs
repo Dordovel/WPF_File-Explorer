@@ -21,6 +21,8 @@ namespace WpfApp1
         public event RoutedEventHandler pressButtonMenuItemListViewDelete;
         public event RoutedEventHandler pressButtonMenuItemListViewProperty;
 
+        public event RoutedEventHandler pressButtonSearch;
+
         public MainWindow()
         {
             InitializeComponent ( );
@@ -37,12 +39,14 @@ namespace WpfApp1
             controller.ImageArray.Add ( Image.hard_drive , "../Image/drive.png" );
 
             controller.printFile("\\");
+
+            ButtonSearch.Click += this.pressButtonSearch;
             
-            file_list.MouseDoubleClick+=list_Item_Selected;
+            file_list.MouseDoubleClick+=this.list_Item_Selected;
 
-            ButtonBack.Click += pressButtonBack;
+            ButtonBack.Click += this.pressButtonBack;
 
-            MenuItemOpen.Click += pressButtonMenuItemListViewOpen;
+            MenuItemOpen.Click += this.pressButtonMenuItemListViewOpen;
 
             /*MenuItemCopy.Click += pressButtonMenuItemListViewCopy;
 
@@ -50,8 +54,8 @@ namespace WpfApp1
 
             MenuItemMove.Click += pressButtonMenuItemListViewMove;
             */
-            MenuItemProperty.Click += pressButtonMenuItemListViewProperty;
-            
+            MenuItemProperty.Click += this.pressButtonMenuItemListViewProperty;
+
         }
     }
 }

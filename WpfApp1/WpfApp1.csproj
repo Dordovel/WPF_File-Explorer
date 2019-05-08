@@ -76,6 +76,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ImageKey.cs" />
+    <Compile Include="Media Player\Media_Player.cs" />
     <Compile Include="Property.xaml.cs">
       <DependentUpon>Property.xaml</DependentUpon>
     </Compile>

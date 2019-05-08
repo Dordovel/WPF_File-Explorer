@@ -55,8 +55,8 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="478,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266" Style="{DynamicResource TextBoxStyle1}" MaxLines="1" RenderTransformOrigin="0.499,0.484"/>
+        <TextBox x:Name="TextBoxSearch" HorizontalAlignment="Left" Height="24" Margin="478,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266" Style="{DynamicResource TextBoxStyle1}" MaxLines="1" RenderTransformOrigin="0.499,0.484"/>
         <Button HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="76" x:Name="ButtonBack" Style="{DynamicResource ButtonStyle1}" Height="24"/>
-        <Button HorizontalAlignment="Left" Margin="757.659,10,-27.659,0" VerticalAlignment="Top" Width="74" Style="{DynamicResource ButtonStyle1}" Height="24" RenderTransformOrigin="0.831,0.466"/>
+        <Button x:Name="ButtonSearch" HorizontalAlignment="Left" Margin="757.659,10,-27.659,0" VerticalAlignment="Top" Width="74" Style="{DynamicResource ButtonStyle1}" Height="24" RenderTransformOrigin="0.831,0.466"/>
     </Grid>
 </Window>
