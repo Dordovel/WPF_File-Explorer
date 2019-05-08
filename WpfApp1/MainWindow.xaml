@@ -5,22 +5,23 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="460" Width="810"
-        ResizeMode="NoResize"
-        x:Name="Window">
+        Title="MainWindow" 
+        Height="460" 
+        Width="810"
+        ResizeMode="NoResize">
 
 
     <Grid>
-        <ListView Foreground="Brown" HorizontalAlignment="Left" Width="800" x:Name="file_list" Margin="-5,39,-4,-4" Height="383" VerticalAlignment="Top" Style="{DynamicResource ListViewStyle1}">
+        <ListView Foreground="Brown" HorizontalAlignment="Left" Width="795" x:Name="file_list" Margin="0,44.412,0,0" Height="377.588" VerticalAlignment="Top">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel>
                         <Grid>
                             <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                                <Image Source="{Binding Image}" Width="30" Height="30"></Image>
+                                <Image Source="{Binding Image}" Width="30" Height="30"/>
                             </Grid>
                             <Grid HorizontalAlignment="Center" Margin="40,0,0,0">
-                                <TextBlock  Text="{Binding Title}" FontSize="14"></TextBlock>
+                                <TextBlock  Text="{Binding Title}" FontSize="14"/>
                             </Grid>
                         </Grid>
                     </StackPanel>
@@ -54,7 +55,8 @@
                 </ContextMenu>
             </ListView.ContextMenu>
         </ListView>
-        <TextBox HorizontalAlignment="Left" Height="24" Margin="478,5,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266"/>
-        <Button Content="" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="75" x:Name="ButtonBack" Style="{DynamicResource ButtonStyle1}"/>
+        <TextBox HorizontalAlignment="Left" Height="24" Margin="478,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266" Style="{DynamicResource TextBoxStyle1}" MaxLines="1" RenderTransformOrigin="0.499,0.484"/>
+        <Button HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="76" x:Name="ButtonBack" Style="{DynamicResource ButtonStyle1}" Height="24"/>
+        <Button HorizontalAlignment="Left" Margin="757.659,10,-27.659,0" VerticalAlignment="Top" Width="74" Style="{DynamicResource ButtonStyle1}" Height="24" RenderTransformOrigin="0.831,0.466"/>
     </Grid>
 </Window>

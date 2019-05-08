@@ -3,6 +3,12 @@
 
 namespace WpfApp1 . View
 {
+    public class Source
+    {
+
+    }
+
+
     class View:IView
     {
         public string Title { get; set; }
