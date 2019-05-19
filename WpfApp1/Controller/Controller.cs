@@ -203,7 +203,9 @@ namespace WpfApp1 . Controller
 
             this.window.ShowMediaPlayer ( Path.GetFileName ( path ) );
 
-            this.window.mediaProgressBar.Maximum = this.media.Duration;
+            this.window.mediaProgressBar.Maximum = this.media.Duration.TotalSeconds;
+
+            TimeSpan span;
 
             Thread thread = new Thread ( () =>
             {
@@ -211,8 +213,13 @@ namespace WpfApp1 . Controller
                 {
                     Application.Current.Dispatcher.BeginInvoke (DispatcherPriority.Background, ( Action ) ( () =>
                               {
-                                  this.window.mediaProgressBar.Value = this.media.CurrentPosition;
+                                  span= this.media.CurrentPosition;
+
+                                  this.window.mediaProgressBar.Value = span.TotalSeconds;
+
+                                  GC.Collect ();
                               } ) );
+
                 }
                       });
             thread.Start ( );
