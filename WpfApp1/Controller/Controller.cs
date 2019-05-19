@@ -3,8 +3,10 @@ using System . Collections . Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Threading;
 using WpfApp1.File;
 using WpfApp1.View;
 
@@ -20,7 +22,7 @@ namespace WpfApp1 . Controller
         private MainWindow window;
         private IView view;
 
-        public Dictionary<Image, string> ImageArray { set; get; }
+        public Dictionary<ImageKey, string> ImageArray { set; get; }
         ObservableCollection<IView> list;
         Media_Player.Media_Player media;
 
@@ -34,7 +36,7 @@ namespace WpfApp1 . Controller
             this.view = view;
 
             this.pathList = new List<string>();
-            this.ImageArray=new Dictionary<Image, string>();
+            this.ImageArray=new Dictionary<ImageKey, string>();
             list = new ObservableCollection<IView> ( );
 
             this.Main_Window_Event_subscription ( );
@@ -81,6 +83,8 @@ namespace WpfApp1 . Controller
 
         private void Window_pressButtonSearch( object sender , RoutedEventArgs e )
         {
+            
+            
         }
 
 
@@ -163,9 +167,9 @@ namespace WpfApp1 . Controller
 
             FileAttributes attr = System.IO.File.GetAttributes ( path );
 
-            if(attr.HasFlag(FileAttributes.Directory))
+            if ( attr.HasFlag ( FileAttributes.Directory ) )
             {
-                this.pathList.Add ( view.Title+"\\" );
+                this.pathList.Add ( view.Title + "\\" );
 
                 this.printFile ( this.getPath ( ) );
             }
@@ -174,16 +178,49 @@ namespace WpfApp1 . Controller
 
                 FileInfo info = new FileInfo ( path );
 
-                foreach( string format in Media_Player.Media_Player.supportMediaFormat )
+                foreach ( string format in Media_Player.Media_Player.supportMediaFormat )
                 {
-                    if ( info.Extension.ToLower().Contains ( format.ToLower() ) )
+                    if ( info.Extension.ToLower ( ).Contains ( format.ToLower ( ) ) )
                     {
-                        this.media.Play ( path );
+                        RunMediaPlayer ( path );
                     }
                 }
             }
         }
-        
+
+        private void RunMediaPlayer( string path )
+        {
+
+            if ( this.media.MediaIsPlay )
+            {
+                media.Stop ( );
+                this.window.CloseMediaPlayer();
+            }
+
+            this.media.Play ( path );
+
+            Thread.Sleep ( 500 );
+
+            this.window.ShowMediaPlayer ( Path.GetFileName ( path ) );
+
+            this.window.mediaProgressBar.Maximum = this.media.Duration;
+
+            Thread thread = new Thread ( () =>
+            {
+                while ( this.media.MediaIsPlay )
+                {
+                    Application.Current.Dispatcher.BeginInvoke (DispatcherPriority.Background, ( Action ) ( () =>
+                              {
+                                  this.window.mediaProgressBar.Value = this.media.CurrentPosition;
+                              } ) );
+                }
+                      });
+            thread.Start ( );
+
+            
+        }
+
+
 
         public void printFile(string path)
         {
@@ -197,7 +234,7 @@ namespace WpfApp1 . Controller
                 {
                     IView vi = this.view.getNewObject();
                     vi.Title = VARIABLE;
-                    vi.Image = this.ImageArray[Image.hard_drive];
+                    vi.Image = this.ImageArray[ImageKey.hard_drive];
 
                     list.Add(vi);
                 }
@@ -220,17 +257,17 @@ namespace WpfApp1 . Controller
 
                         if (attr.HasFlag(FileAttributes.Directory))
                         {
-                            vi.Image = this.ImageArray[Image.folder];
+                            vi.Image = this.ImageArray[ImageKey.folder];
                         }
 
                         else if ( info.Extension.Contains("txt") )
                         {
-                            vi.Image = this.ImageArray [ Image.textFile ];
+                            vi.Image = this.ImageArray [ ImageKey.textFile ];
                         }
 
                         else if ( info.Extension.Contains ( "mp3" ) )
                         {
-                            vi.Image = this.ImageArray [ Image.music ];
+                            vi.Image = this.ImageArray [ ImageKey.music ];
                         }
 
                         else if (info.Extension.Contains("jpg")

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WpfApp1
 {
-   public enum Image
+   public enum ImageKey
     {
         folder,
         music,
