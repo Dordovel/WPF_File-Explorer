@@ -182,7 +182,7 @@ namespace WpfApp1 . Controller
                 {
                     if ( info.Extension.ToLower ( ).Contains ( format.ToLower ( ) ) )
                     {
-                        RunMediaPlayer ( path );
+                        this.RunMediaPlayer ( path );
                     }
                 }
             }
@@ -193,7 +193,7 @@ namespace WpfApp1 . Controller
 
             if ( this.media.MediaIsPlay )
             {
-                media.Stop ( );
+                this.media.Stop ( );
                 this.window.CloseMediaPlayer();
             }
 
@@ -211,13 +211,11 @@ namespace WpfApp1 . Controller
             {
                 while ( this.media.MediaIsPlay )
                 {
-                    Application.Current.Dispatcher.BeginInvoke (DispatcherPriority.Background, ( Action ) ( () =>
+                    Application.Current.Dispatcher.Invoke (DispatcherPriority.Background, ( Action ) ( () =>
                               {
                                   span= this.media.CurrentPosition;
 
                                   this.window.mediaProgressBar.Value = span.TotalSeconds;
-
-                                  GC.Collect ();
                               } ) );
 
                 }
