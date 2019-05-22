@@ -138,25 +138,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Image\Back.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\document.png" />
-    <Resource Include="Image\folder.png" />
-    <Resource Include="Image\music.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\drive.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Image\copy.png" />
-    <Resource Include="Image\delete.png" />
-    <Resource Include="Image\move.png" />
-    <Resource Include="Image\new_folder.png" />
-    <Resource Include="Image\paste.png" />
-    <Resource Include="Image\search.png" />
-  </ItemGroup>
-  <ItemGroup>
     <COMReference Include="Shell32">
       <Guid>{50A7E9B0-70EF-11D1-B75A-00A0C90564FE}</Guid>
       <VersionMajor>1</VersionMajor>
@@ -178,6 +159,20 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Image\copy.png" />
+    <Resource Include="Image\delete.png" />
+    <Resource Include="Image\document.png" />
+    <Resource Include="Image\drive.png" />
+    <Resource Include="Image\folder.png" />
+    <Resource Include="Image\move.png" />
+    <Resource Include="Image\music.png" />
+    <Resource Include="Image\new_folder.png" />
+    <Resource Include="Image\paste.png" />
+    <Resource Include="Image\pause.png" />
+    <Resource Include="Image\play.png" />
+    <Resource Include="Image\stop.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -25,8 +25,7 @@ namespace WpfApp1 . Controller
         public Dictionary<ImageKey, string> ImageArray { set; get; }
         ObservableCollection<IView> list;
         Media_Player.Media_Player media;
-
-
+        
 
 
         public Controller(MainWindow window, IData person_file, IView view)
@@ -37,17 +36,14 @@ namespace WpfApp1 . Controller
 
             this.pathList = new List<string>();
             this.ImageArray=new Dictionary<ImageKey, string>();
-            list = new ObservableCollection<IView> ( );
+            this.list = new ObservableCollection<IView> ( );
 
             this.Main_Window_Event_subscription ( );
 
-            this.media = new Media_Player.Media_Player ( );
-
-            visibleFile = false;
+            this.visibleFile = false;
         }
 
-
-
+        
 
         private void Main_Window_Event_subscription()
         {
@@ -61,51 +57,34 @@ namespace WpfApp1 . Controller
 
             this.window.pressButtonSearch += this.Window_pressButtonSearch;
 
-            this.window.Unloaded += this.Window_Unloaded;
+            this.window.Closed += this.Window_Closed;
+
+            this.window.eventEditCurrentPositionMediaPlayer += this.Window_eventEditCurrentPositionMediaPlayer;
         }
 
+        private void Window_eventEditCurrentPositionMediaPlayer( object sender , System.Windows.Controls.Primitives.DragCompletedEventArgs e )
+        {
+            this.window.MessageBoxShow ( "Hello World" );
+        }
 
-
-
-        private void Window_Unloaded( object sender , RoutedEventArgs e )
+        private void Window_Closed( object sender , EventArgs e )
         {
             if ( media != null )
             {
                 if ( media.MediaIsPlay )
                 {
-                    media.Close ( );
+                    media.Stop ( );
                 }
             }
         }
 
 
-
-
-        private void Window_pressButtonSearch( object sender , RoutedEventArgs e )
-        {
-            
-            
-        }
-
-
-
-
-        private void Window_pressButtonMenuItemListViewProperty( object sender , RoutedEventArgs e )
-        {
-            new Property(this.getPath()+this.getListViewSelectedItemFromContextMenu(sender).Title).ShowDialog();
-        }
-
-
         #region Event
 
-        #region ContextMenuEvent
         private void Window_pressButtonMenuItemListViewOpen( object sender , RoutedEventArgs e )
         {
-            this.Open ( this.getListViewSelectedItemFromContextMenu ( sender ) );
+            this.OpenFile_or_Directory ( this.getListViewSelectedItemFromContextMenu ( sender ) );
         }
-
-
-        #endregion
 
 
         private void Window_list_Item_Selected( object sender , System.Windows.Input.MouseButtonEventArgs e )
@@ -114,11 +93,16 @@ namespace WpfApp1 . Controller
 
             if ( item != null )
             {
-                this.Open ( item );
+                this.OpenFile_or_Directory ( item );
             }
         }
 
 
+        private void Window_pressButtonSearch( object sender , RoutedEventArgs e )
+        {
+
+
+        }
 
 
         private void Window_pressButtonBack( object sender , RoutedEventArgs e )
@@ -134,8 +118,15 @@ namespace WpfApp1 . Controller
         }
 
 
+        private void Window_pressButtonMenuItemListViewProperty( object sender , RoutedEventArgs e )
+        {
+            new Property ( this.getPath ( ) + this.getListViewSelectedItemFromContextMenu ( sender ).Title ).ShowDialog ( );
+        }
+        
 
         #endregion
+
+
 
         private IView getListViewSelectedItemFromContextMenu(object sender)
         {
@@ -145,8 +136,7 @@ namespace WpfApp1 . Controller
 
             return lvi.SelectedItem as IView;
         }
-
-       
+        
 
         public string getPath()
         {
@@ -161,7 +151,7 @@ namespace WpfApp1 . Controller
         }
         
 
-        private void Open(IView view)
+        private void OpenFile_or_Directory(IView view)
         {
             string path = this.getPath ( ) + (view.Title);
 
@@ -187,19 +177,23 @@ namespace WpfApp1 . Controller
                 }
             }
         }
+        
 
         private void RunMediaPlayer( string path )
         {
-
-            if ( this.media.MediaIsPlay )
+            if ( this.media != null )
             {
+                this.window.CloseMediaPlayer ( );
                 this.media.Stop ( );
-                this.window.CloseMediaPlayer();
+                this.media = null;
             }
 
-            this.media.Play ( path );
 
-            Thread.Sleep ( 500 );
+            this.media = new Media_Player.Media_Player ( path );
+
+            this.media.Play ();
+
+            Thread.Sleep ( 1000 );
 
             this.window.ShowMediaPlayer ( Path.GetFileName ( path ) );
 
@@ -211,12 +205,19 @@ namespace WpfApp1 . Controller
             {
                 while ( this.media.MediaIsPlay )
                 {
-                    Application.Current.Dispatcher.Invoke (DispatcherPriority.Background, ( Action ) ( () =>
-                              {
-                                  span= this.media.CurrentPosition;
+                    try
+                    {
+                        Application.Current.Dispatcher.Invoke ( DispatcherPriority.Background , ( Action ) ( () =>
+                                    {
+                                        span = this.media.CurrentPosition;
 
-                                  this.window.mediaProgressBar.Value = span.TotalSeconds;
-                              } ) );
+                                        this.window.mediaProgressBar.Value = span.TotalSeconds;
+                                    } ) );
+
+                    }catch(NullReferenceException e)
+                    {
+                        break;
+                    }
 
                 }
                       });
@@ -224,8 +225,7 @@ namespace WpfApp1 . Controller
 
             
         }
-
-
+        
 
         public void printFile(string path)
         {
@@ -241,7 +241,7 @@ namespace WpfApp1 . Controller
                     vi.Title = VARIABLE;
                     vi.Image = this.ImageArray[ImageKey.hard_drive];
 
-                    list.Add(vi);
+                    this.list.Add(vi);
                 }
             }
             else
@@ -283,17 +283,15 @@ namespace WpfApp1 . Controller
 
                         info = null;
 
-                        list.Add ( vi );
+                        this.list.Add ( vi );
                     }
                 }
             }
 
-            window.file_list.ItemsSource = list;
+            this.window.file_list.ItemsSource = this.list;
             
         }
-
-
-
+        
 
         public string back()
         {

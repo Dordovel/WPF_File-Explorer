@@ -14,7 +14,7 @@
 
     <Grid>
         <StackPanel x:Name="stackPanel">
-            <ListView Background="AliceBlue" Foreground="Brown" HorizontalAlignment="Left" Width="795" x:Name="file_list" Margin="0,44.412,0,0" Height="376" VerticalAlignment="Top">
+            <ListView Background="AliceBlue" Foreground="Brown" HorizontalAlignment="Left" Width="795" x:Name="file_list" Margin="0,44.412,0,0" Height="386" VerticalAlignment="Top">
                 <ListView.ItemTemplate>
                     <DataTemplate>
                         <StackPanel>

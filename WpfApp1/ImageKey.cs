@@ -12,6 +12,9 @@ namespace WpfApp1
         music,
         textFile,
         Pictures,
-        hard_drive
+        hard_drive,
+        music_play,
+        music_pause,
+        music_stop
     }
 }
