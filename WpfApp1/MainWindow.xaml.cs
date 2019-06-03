@@ -18,24 +18,22 @@ namespace WpfApp1
     {
 
         #region MainWindowEvent
-        public event MouseButtonEventHandler list_Item_Selected;
-        public event RoutedEventHandler pressButtonBack;
+        public event MouseButtonEventHandler Event_File_List_Item_Selected;
+        public event RoutedEventHandler EventPressButtonBack;
 
-        public event RoutedEventHandler pressButtonMenuItemListViewOpen;
+        public event RoutedEventHandler EventPressButtonMenuItemListViewOpen;
         //public event RoutedEventHandler pressButtonMenuItemListViewCopy;
         //public event RoutedEventHandler pressButtonMenuItemListViewMove;
         //public event RoutedEventHandler pressButtonMenuItemListViewDelete;
-        public event RoutedEventHandler pressButtonMenuItemListViewProperty;
+        public event RoutedEventHandler EventPressButtonMenuItemListViewProperty;
 
-        public event RoutedEventHandler pressButtonSearch;
+        public event RoutedEventHandler EventPressButtonSearch;
 
-        public event DragCompletedEventHandler eventEditCurrentPositionMediaPlayer;
+        public event DragCompletedEventHandler EventEditCurrentPositionMediaPlayer;
+
+        public event RoutedEventHandler PropertyExpanderExpanded;
 
         #endregion
-
-
-
-        public Slider mediaProgressBar;
 
         private StackPanel mediaPlayerPanel;
 
@@ -44,6 +42,9 @@ namespace WpfApp1
         private IView view;
 
         Controller.Controller controller;
+
+
+
 
         public MainWindow()
         {
@@ -73,13 +74,13 @@ namespace WpfApp1
 
         private void event_subscription()
         {
-            ButtonSearch.Click += this.pressButtonSearch;
+            ButtonSearch.Click += this.EventPressButtonSearch;
 
-            file_list.MouseDoubleClick += this.list_Item_Selected;
+            file_list.MouseDoubleClick += this.Event_File_List_Item_Selected;
 
-            ButtonBack.Click += this.pressButtonBack;
+            ButtonBack.Click += this.EventPressButtonBack;
 
-            MenuItemOpen.Click += this.pressButtonMenuItemListViewOpen;
+            MenuItemOpen.Click += this.EventPressButtonMenuItemListViewOpen;
 
             /*MenuItemCopy.Click += pressButtonMenuItemListViewCopy;
 
@@ -87,81 +88,18 @@ namespace WpfApp1
 
             MenuItemMove.Click += pressButtonMenuItemListViewMove;
             */
-            MenuItemProperty.Click += this.pressButtonMenuItemListViewProperty;
+            MenuItemProperty.Click += this.EventPressButtonMenuItemListViewProperty;
+
+            propertyExpander.Expanded += this.PropertyExpanderExpanded;
         }
 
 
-        public void ShowMediaPlayer(string name)
-        {
-            StackPanel mediaInfo = new StackPanel ( );
-
-            TextBlock mediaName = new TextBlock ( );
-
-            mediaName.Text = name;
-            mediaName.TextAlignment = TextAlignment.Center;
-
-            this.mediaProgressBar = new Slider ( );
-            Style style = this.FindResource ( "SliderStyle1" ) as Style;
-            mediaProgressBar.Style = style;
-            this.mediaProgressBar.Minimum = 0;
-            this.mediaProgressBar.Height = 20;
-
-            mediaInfo.Children.Add ( mediaName );
-            mediaInfo.Children.Add ( this.mediaProgressBar );
-
-            Grid grid = new Grid ( );
-
-            this.mediaPlayerPanel = new StackPanel ( );
-            mediaPlayerPanel.Children.Add ( mediaInfo );
-
-            grid.Children.Add ( this.Create_Media_Button(ImageKey.music_play,HorizontalAlignment.Center,new Thickness(0,0,0,0) ));
-            grid.Children.Add ( this.Create_Media_Button ( ImageKey.music_pause , HorizontalAlignment.Right, new Thickness ( 0 , 0 , 80 , 0 ) ) );
-            grid.Children.Add ( this.Create_Media_Button ( ImageKey.music_stop , HorizontalAlignment.Left, new Thickness ( 80 , 0 , 0 , 0 ) ) );
-
-            mediaPlayerPanel.Background = Brushes.AliceBlue;
-
-            mediaPlayerPanel.Children.Add ( grid );
-
-            this.stackPanel.Children.Add ( mediaPlayerPanel );
-
-            mediaPlayerPanel.Height = 70;
-
-            this.file_list.Height = this.file_list.Height - 80;
-        }
-
-        private Button Create_Media_Button(ImageKey key,HorizontalAlignment horizontalAlignment, Thickness thickness)
-        {
-            Image imagePause = new Image ( );
-            BitmapImage bitmapImage = new BitmapImage ( new Uri (
-                Path.Combine ( Environment.CurrentDirectory , "Image" , this.controller.ImageArray [ key ] ) ) );
-            imagePause.Source = bitmapImage;
-            imagePause.Height = 20;
-            imagePause.Width = 20;
-            
-
-            Button pause = new Button ( );
-            pause.Content = imagePause;
-            pause.Height = 25;
-            pause.Width = 25;
-            pause.Background = Brushes.AliceBlue;
-            pause.BorderBrush = Brushes.AliceBlue;
-            pause.HorizontalAlignment = HorizontalAlignment;
-            pause.Margin = thickness;
-
-            return pause;
-        }
 
         private void Thumb_DragCompleted( object sender , DragCompletedEventArgs e )
         {
             this.MessageBoxShow ( "Hello" );
         }
 
-        public void CloseMediaPlayer()
-        {
-            this.file_list.Height = this.file_list.Height + 80;
-
-            this.stackPanel.Children.Remove ( this.mediaPlayerPanel );
-        }
 
 
 

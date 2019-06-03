@@ -6,60 +6,187 @@
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
         Title="MainWindow" 
-        Height="460" 
+        Height="451" 
         Width="810"
         ResizeMode="NoResize"
-        Background="AntiqueWhite">
+        Background="AntiqueWhite"
+        x:Name="mainWindow">
 
+    
 
     <Grid>
-        <StackPanel x:Name="stackPanel">
-            <ListView Background="AliceBlue" Foreground="Brown" HorizontalAlignment="Left" Width="795" x:Name="file_list" Margin="0,44.412,0,0" Height="386" VerticalAlignment="Top">
-                <ListView.ItemTemplate>
-                    <DataTemplate>
-                        <StackPanel>
-                            <Grid>
-                                <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
-                                    <Image Source="{Binding Image}" Width="30" Height="30"/>
-                                </Grid>
-                                <Grid HorizontalAlignment="Center" Margin="40,0,0,0">
-                                    <TextBlock  Text="{Binding Title}" FontSize="14"/>
-                                </Grid>
-                            </Grid>
+        <StackPanel>
+            <Expander 
+                x:Name="propertyExpander"
+                Panel.ZIndex="0"
+                >
+                <Border
+                    BorderBrush="Gray"
+                    BorderThickness="2,2,2,2"
+                    CornerRadius="20,20,20,20"
+                    Visibility="Collapsed"
+                    x:Name="mediaPlayerWindowinExpander">
+
+                    <StackPanel 
+                        Height="60">
+
+                        <TextBlock
+                        x:Name="media_file_name"
+                        Height="15"
+                        Text="Test"
+                        TextAlignment="Center">
+                        </TextBlock>
+                        <Slider
+                        Style="{DynamicResource SliderStyle1}"
+                        Height="30"
+                        x:Name="mediaProgressBar">
+                        </Slider>
+
+                        <StackPanel
+                       Orientation="Horizontal"
+                        Height="20"
+                        Margin="0,-10,0,0"
+                        >
+                            <Button
+                            Height="20"
+                            x:Name="mediaButtonStop"
+                            HorizontalAlignment="Left"
+                            Background="{Binding ElementName=mainWindow, Path=Background}"
+                            BorderBrush="{Binding ElementName=mainWindow, Path=Background}"
+                            Margin="320,0,0,0">
+                                <Image
+                                Height="15"
+                                Source="../Image/stop.png">
+                                </Image>
+                            </Button>
+
+                            <Button
+                            Height="20"
+                            x:Name="mediaButtonPlay"
+                            HorizontalAlignment="Center"
+                            Background="{Binding ElementName=mainWindow, Path=Background}"
+                            BorderBrush="{Binding ElementName=mainWindow, Path=Background}"
+                            Margin="50,0,0,0">
+                                <Image
+                                Height="15"
+                                Source="../Image/play.png">
+                                </Image>
+                            </Button>
+
+                            <Button
+                            Height="20"
+                            x:Name="mediaButtonPause"
+                            HorizontalAlignment="Right"
+                            Background="{Binding ElementName=mainWindow, Path=Background}"
+                            BorderBrush="{Binding ElementName=mainWindow, Path=Background}"
+                            Margin="50,0,0,0">
+                                <Image
+                                Height="15"
+                                Source="../Image/pause.png">
+                                </Image>
+                            </Button>
+
                         </StackPanel>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-                <ListView.ContextMenu>
-                    <ContextMenu>
+                    </StackPanel>
+                </Border>
+            </Expander>
 
-                        <MenuItem Header="Open" x:Name="MenuItemOpen"/>
+            <Grid
+                Panel.ZIndex="1">
+                
+                <StackPanel x:Name="stackPanel">
+                    
+                    <ListView 
+                Background="AliceBlue" 
+                Foreground="Brown" 
+                HorizontalAlignment="Left" 
+                Width="795" 
+                x:Name="file_list" 
+                Margin="0,44.412,0,0" 
+                Height="368" 
+                VerticalAlignment="Top"
+                    Panel.ZIndex="0">
 
-                        <MenuItem Header="Copy" x:Name="MenuItemCopy">
-                            <MenuItem.Icon>
-                                <Image Source="../Image/copy.png"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <StackPanel>
+                                    <Grid>
+                                        <Grid HorizontalAlignment="Left" VerticalAlignment="Top">
+                                            <Image Source="{Binding Image}" Width="30" Height="30"/>
+                                        </Grid>
+                                        <Grid HorizontalAlignment="Center" Margin="40,0,0,0">
+                                            <TextBlock  Text="{Binding Title}" FontSize="14"/>
+                                        </Grid>
+                                    </Grid>
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                        <ListView.ContextMenu>
+                            <ContextMenu>
 
-                        <MenuItem Header="Move" x:Name="MenuItemMove">
-                            <MenuItem.Icon>
-                                <Image Source="../Image/move.png"></Image>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                                <MenuItem Header="Open" x:Name="MenuItemOpen"/>
 
-                        <MenuItem Header="Delete" x:Name="MenuItemDelete">
-                            <MenuItem.Icon>
-                                <Image Source="../Image/delete.png"></Image>
-                            </MenuItem.Icon>
-                        </MenuItem>
+                                <MenuItem Header="Copy" x:Name="MenuItemCopy">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Image/copy.png"/>
+                                    </MenuItem.Icon>
+                                </MenuItem>
 
-                        <MenuItem Header="Property" x:Name="MenuItemProperty"/>
+                                <MenuItem Header="Move" x:Name="MenuItemMove">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Image/move.png"></Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
 
-                    </ContextMenu>
-                </ListView.ContextMenu>
-            </ListView>
+                                <MenuItem Header="Delete" x:Name="MenuItemDelete">
+                                    <MenuItem.Icon>
+                                        <Image Source="../Image/delete.png"></Image>
+                                    </MenuItem.Icon>
+                                </MenuItem>
+
+                                <MenuItem Header="Property" x:Name="MenuItemProperty"/>
+
+                            </ContextMenu>
+                        </ListView.ContextMenu>
+                    </ListView>
+
+                </StackPanel>
+
+                <TextBox 
+                x:Name="TextBoxSearch" 
+                HorizontalAlignment="Left" 
+                Height="24" 
+                Margin="478,10,0,0" 
+                TextWrapping="Wrap" 
+                VerticalAlignment="Top" 
+                Width="266" 
+                Style="{DynamicResource TextBoxStyle1}" 
+                MaxLines="1" 
+                RenderTransformOrigin="0.499,0.484"
+                />
+
+                <Button 
+                HorizontalAlignment="Left" 
+                Margin="10,10,0,0" 
+                VerticalAlignment="Top" 
+                Width="76" 
+                x:Name="ButtonBack" 
+                Style="{DynamicResource ButtonStyle1}" 
+                Height="24"
+                />
+
+                <Button 
+                x:Name="ButtonSearch" 
+                HorizontalAlignment="Left" 
+                Margin="757.659,10,-27.659,0" 
+                VerticalAlignment="Top" 
+                Width="74" 
+                Style="{DynamicResource ButtonStyle1}" 
+                Height="24" 
+                RenderTransformOrigin="0.831,0.466"
+                />
+
+            </Grid>
         </StackPanel>
-        <TextBox x:Name="TextBoxSearch" HorizontalAlignment="Left" Height="24" Margin="478,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="266" Style="{DynamicResource TextBoxStyle1}" MaxLines="1" RenderTransformOrigin="0.499,0.484"/>
-            <Button HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Width="76" x:Name="ButtonBack" Style="{DynamicResource ButtonStyle1}" Height="24"/>
-            <Button x:Name="ButtonSearch" HorizontalAlignment="Left" Margin="757.659,10,-27.659,0" VerticalAlignment="Top" Width="74" Style="{DynamicResource ButtonStyle1}" Height="24" RenderTransformOrigin="0.831,0.466"/>
     </Grid>
 </Window>

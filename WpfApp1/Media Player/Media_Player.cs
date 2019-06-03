@@ -17,8 +17,6 @@ namespace WpfApp1.Media_Player
 
         public bool MediaIsPause { get; private set; }
 
-        public string MediaError { get; private set; }
-
         public static readonly string [ ] supportMediaFormat =
         {
             ".FLAC",
@@ -29,14 +27,15 @@ namespace WpfApp1.Media_Player
         {
             get
             {
-                if ( this.mediaPlayer == null )
+                TimeSpan span=TimeSpan.Zero;
+
+                var player = this.mediaPlayer;
+                if (player != null && player.NaturalDuration.TimeSpan != null)
                 {
-                    return TimeSpan.Zero;
+                    span = player.NaturalDuration.TimeSpan;
                 }
-                else
-                {
-                  return this.mediaPlayer.NaturalDuration.TimeSpan;
-                }
+
+                return span;
             }
         }
 
@@ -61,7 +60,14 @@ namespace WpfApp1.Media_Player
         {
             this.media_file_path = path;
             this.Media_Player_Initialization ( this.media_file_path );
+            this.mediaPlayer.MediaOpened += this.MediaPlayer_MediaOpened;
 
+        }
+
+        private void MediaPlayer_MediaOpened( object sender , EventArgs e )
+        {
+            this.MediaIsPlay = true;
+            this.MediaIsPause = false;
         }
 
         private void Media_Player_Initialization( string file_path )
@@ -72,8 +78,6 @@ namespace WpfApp1.Media_Player
 
             this.mediaPlayer.Play ( );
 
-            this.MediaIsPlay = true;
-            this.MediaIsPause = false;
         }
 
         public void Play()

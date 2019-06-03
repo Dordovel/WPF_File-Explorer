@@ -47,19 +47,62 @@ namespace WpfApp1 . Controller
 
         private void Main_Window_Event_subscription()
         {
-            this.window.list_Item_Selected += Window_list_Item_Selected;
+            this.window.Event_File_List_Item_Selected += Window_list_Item_Selected;
 
-            this.window.pressButtonBack += Window_pressButtonBack;
+            this.window.EventPressButtonBack += Window_pressButtonBack;
 
-            this.window.pressButtonMenuItemListViewOpen += this.Window_pressButtonMenuItemListViewOpen;
+            this.window.EventPressButtonMenuItemListViewOpen += this.Window_pressButtonMenuItemListViewOpen;
 
-            this.window.pressButtonMenuItemListViewProperty += this.Window_pressButtonMenuItemListViewProperty;
+            this.window.EventPressButtonMenuItemListViewProperty += this.Window_pressButtonMenuItemListViewProperty;
 
-            this.window.pressButtonSearch += this.Window_pressButtonSearch;
+            this.window.EventPressButtonSearch += this.Window_pressButtonSearch;
 
             this.window.Closed += this.Window_Closed;
 
-            this.window.eventEditCurrentPositionMediaPlayer += this.Window_eventEditCurrentPositionMediaPlayer;
+            this.window.EventEditCurrentPositionMediaPlayer += this.Window_eventEditCurrentPositionMediaPlayer;
+
+            this.window.PropertyExpanderExpanded += this.Window_PropertyExpanderExpanded;
+        }
+
+        private void Window_PropertyExpanderExpanded( object sender , RoutedEventArgs e )
+        {
+            if (this.media != null)
+            {
+                if (this.media.MediaIsPlay)
+                {
+                    this.window.mediaPlayerWindowinExpander.Visibility = Visibility.Visible;
+
+                    Thread thread = new Thread(() =>
+                    {
+                        bool flag = false;
+
+                        Application.Current.Dispatcher.Invoke(DispatcherPriority.Background,
+                            (Action) (() =>
+                            {
+                                flag = this.media.MediaIsPlay;
+                                this.window.mediaProgressBar.Maximum = this.media.Duration.TotalSeconds;
+                            }));
+
+                        while (flag)
+                        {
+                            try
+                            {
+                                Application.Current.Dispatcher.Invoke ( DispatcherPriority.Background ,
+                                    ( Action ) ( () =>
+                                    {
+                                        this.window.mediaProgressBar.Value = this.media.CurrentPosition.TotalSeconds;
+                                    } ) );
+                            }
+                            catch (Exception exception)
+                            {
+                                return;
+                            }
+                        }
+                    });
+                    thread.Start();
+                }
+            }
+
         }
 
         private void Window_eventEditCurrentPositionMediaPlayer( object sender , System.Windows.Controls.Primitives.DragCompletedEventArgs e )
@@ -107,13 +150,6 @@ namespace WpfApp1 . Controller
 
         private void Window_pressButtonBack( object sender , RoutedEventArgs e )
         {
-            for ( int a = 0 ; a < this.list.Count ; ++a )
-            {
-                this.list [ a ] = null;
-            }
-
-            GC.Collect ( );
-
             this.printFile ( this.back ( ) );
         }
 
@@ -177,13 +213,14 @@ namespace WpfApp1 . Controller
                 }
             }
         }
+
+
         
 
         private void RunMediaPlayer( string path )
         {
             if ( this.media != null )
             {
-                this.window.CloseMediaPlayer ( );
                 this.media.Stop ( );
                 this.media = null;
             }
@@ -192,38 +229,6 @@ namespace WpfApp1 . Controller
             this.media = new Media_Player.Media_Player ( path );
 
             this.media.Play ();
-
-            Thread.Sleep ( 1000 );
-
-            this.window.ShowMediaPlayer ( Path.GetFileName ( path ) );
-
-            this.window.mediaProgressBar.Maximum = this.media.Duration.TotalSeconds;
-
-            TimeSpan span;
-
-            Thread thread = new Thread ( () =>
-            {
-                while ( this.media.MediaIsPlay )
-                {
-                    try
-                    {
-                        Application.Current.Dispatcher.Invoke ( DispatcherPriority.Background , ( Action ) ( () =>
-                                    {
-                                        span = this.media.CurrentPosition;
-
-                                        this.window.mediaProgressBar.Value = span.TotalSeconds;
-                                    } ) );
-
-                    }catch(NullReferenceException e)
-                    {
-                        break;
-                    }
-
-                }
-                      });
-            thread.Start ( );
-
-            
         }
         
 
